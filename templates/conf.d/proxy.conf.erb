@@ -7,5 +7,11 @@ proxy_read_timeout      <%= scope.lookupvar('nginx::params::nx_proxy_read_timeou
 proxy_buffers           <%= @proxy_buffers %>;
 proxy_buffer_size       <%= @proxy_buffer_size %>;
 proxy_http_version      <%= @proxy_http_version %>;
+
 <% @proxy_set_header.each do |header| %>
 proxy_set_header        <%= header %>;<% end %>
+
+<% if @proxy_cfg_append -%><% @proxy_cfg_append.sort_by{|k,v| k}.each do |key,value| -%>
+<%= key %> <%= value %>;
+<% end -%>
+<% end -%>

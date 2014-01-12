@@ -56,6 +56,10 @@ class nginx (
   $nginx_upstreams        = {},
   $nginx_locations        = {},
   $manage_repo            = $nginx::params::manage_repo,
+  $proxy_cfg_append       = $nginx::params::nx_proxy_cfg_append,
+  $types_hash_max_size    = $nginx::params::nx_types_hash_max_size,
+  $types_hash_bucket_size = $nginx::params::nx_types_hash_bucket_size,
+  $names_hash_bucket_size = $nginx::params::nx_names_hash_bucket_size
 ) inherits nginx::params {
 
   include stdlib
@@ -83,7 +87,11 @@ class nginx (
     client_max_body_size  => $client_max_body_size,
     proxy_buffers         => $proxy_buffers,
     proxy_buffer_size     => $proxy_buffer_size,
+    types_hash_max_size   => $types_hash_max_size,
+    types_hash_bucket_size => $types_hash_bucket_size,
+    names_hash_bucket_size => $names_hash_bucket_size,
     http_cfg_append       => $http_cfg_append,
+    proxy_cfg_append      => $proxy_cfg_append,
     nginx_error_log       => $nginx_error_log,
     http_access_log       => $http_access_log,
     require               => Class['nginx::package'],
